@@ -1,0 +1,29 @@
+MODIFICATIONS
+ 
+in histomicstk/__init.py
+
+Using local version of dsarchive/histomicstk:dev via a local repository
+at port 5000
+
+localhost:5000/dsarchive/histomicstk:dev
+
+
+in girder worker /cfg 
+add :
+[docker]
+excluded_images='localhost:5000/dsarchive/histomicstk:dev'
+
+How to use a registry
+
+registry is started by running 
+
+docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+first tag the image
+
+docker tag dsarchive/histomicstk localhost:5000/dsarchive/histomicstk
+
+then push the image
+
+docker push localhost:5000/dsarchive/histomicstk:dev
+

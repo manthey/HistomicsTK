@@ -70,6 +70,12 @@ module.exports = function (grunt) {
                 files: [{
                     '<%= histomics.extjs %>/tinycolor.js': '<%= histomics.npm %>/tinycolor2/tinycolor.js'
                 }]
+            },
+            'bootstrap-select': {
+                files: [{
+                    '<%= histomics.extjs %>/bootstrap-select.js': '<%= histomics.npm %>/bootstrap-select/dist/js/bootstrap-select.js',
+                    '<%= histomics.extcss %>/bootstrap-select.css': '<%= histomics.npm %>/bootstrap-select/dist/css/bootstrap-select.css'
+                }]
             }
         },
         stylus: {
@@ -96,6 +102,11 @@ module.exports = function (grunt) {
                 ]
             },
             'copy:tinycolor': {
+                dependencies: [
+                    'shell:plugin-HistomicsTK'
+                ]
+            },
+            'copy:bootstrap-select': {
                 dependencies: [
                     'shell:plugin-HistomicsTK'
                 ]

@@ -1,30 +1,75 @@
 histomicstk.views.ItemSelectorWidget = girder.View.extend({
     events: {
-        'click .h-select-button': '_selectButton'
+        'click .h-select-button': '_selectButton',
+        'change #h-select-hierarchy-root': '_selectRoot'
     },
 
-    initialize: function () {
+    initialize: function (settings) {
+        settings = settings || {};
         if (!this.model) {
             this.model = new girder.models.ItemModel();
         }
+        this._root = settings.root;
+
+        this._collections = new girder.collections.CollectionCollection();
+        if (settings.collectionLimit >= 0) {
+            this._collections.pageLimit = settings.collectionLimit;
+        }
+
+        this._users = new girder.collections.UserCollection();
+        if (settings.userLimit >= 0) {
+            this._users.pageLimit = settings.userLimit;
+        }
+
+        this.listenTo(this._collections, 'g:changed', this._renderRootSelection);
+        this.listenTo(this._users, 'g:changed', this._renderRootSelection);
+        this.listenTo(girder.events, 'g:login', this._renderRootSelection);
+
+        this._collections.fetch();
+        this._users.fetch();
     },
 
     render: function () {
-        this._hierarchyView = new girder.views.HierarchyWidget({
-            parentView: this,
-            parentModel: histomicstk.rootPath,
-            checkboxes: false,
-            routing: false,
-            showActions: false,
-            onItemClick: _.bind(this._selectItem, this)
-        });
 
         this.$el.html(
             histomicstk.templates.itemSelectorWidget(this.model.attributes)
         ).girderModal(this);
 
-        this._hierarchyView.setElement(this.$('.h-hierarchy-widget')).render();
+        this._renderRootSelection();
         return this;
+    },
+
+    _renderRootSelection: function () {
+        if (!this._root && girder.currentUser) {
+            this._root = girder.currentUser;
+        }
+        this.$('.h-hierarchy-root').html(
+            histomicstk.templates.rootSelectorWidget({
+                root: this._root,
+                home: girder.currentUser,
+                collections: this._collections.models,
+                users: this._users.models
+            })
+        );
+        if (this._root) {
+            this._renderHierarchyView();
+        }
+    },
+
+    _renderHierarchyView: function () {
+        if (this._hierarchyView) {
+            this._hierarchyView.off();
+            this.$('.h-hierarchy-widget').empty();
+        }
+        this._hierarchyView = new girder.views.HierarchyWidget({
+            parentView: this,
+            parentModel: this._root,
+            checkboxes: false,
+            routing: false,
+            showActions: false,
+            onItemClick: _.bind(this._selectItem, this)
+        });
+        this._hierarchyView.setElement(this.$('.h-hierarchy-widget')).render();
     },
 
     /**
@@ -99,5 +144,21 @@ histomicstk.views.ItemSelectorWidget = girder.View.extend({
         }
         this.trigger('g:saved');
         this.$el.modal('hide');
+    },
+
+    _selectRoot: function (evt) {
+        var $el = $(evt.target).find(':selected');
+        switch ($el.data('type')) {
+            case 'collection':
+                this._root = this._collections.get($el.val());
+                break;
+            case 'user':
+                this._root = this._users.get($el.val());
+                break;
+            default:
+                this._root = null;
+                break;
+        }
+        this._renderRootSelection();
     }
 });

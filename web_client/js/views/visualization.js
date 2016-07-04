@@ -415,5 +415,6 @@ histomicstk.dialogs.image = new histomicstk.views.ItemSelectorWidget({
     parentView: null,
     model: new histomicstk.models.Widget({
         type: 'file'
-    })
+    }),
+    root: histomicstk.rootPath
 });

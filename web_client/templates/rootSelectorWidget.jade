@@ -1,0 +1,14 @@
+label.control-label(for='h-select-hierarchy-root') Root collection or user
+select.selectpicker#h-select-hierarchy-root
+  - root = root || {};
+  if home
+    option(value=home.id, data-type='user', selected=root.id === home.id) Home
+  if collections.length > 0
+    optgroup(label='Collections')
+      each collection in collections
+        option(value=collection.id, data-type='collection', selected=root.id === collection.id) #{collection.name()}
+  if users.length > 0
+    optgroup(label='Users')
+      each user in users
+        if (user.id !== (home || {}).id)
+          option(value=user.id, data-type='user', selected=root.id === user.id) #{user.name()}

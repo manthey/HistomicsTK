@@ -120,7 +120,8 @@ histomicstk.views.ControlWidget = girder.View.extend({
         var modal = new histomicstk.views.ItemSelectorWidget({
             el: $('#g-dialog-container'),
             parentView: this,
-            model: this.model
+            model: this.model,
+            root: histomicstk.rootPath
         });
         modal.on('g:saved', _.bind(function () {
             modal.$el.modal('hide');

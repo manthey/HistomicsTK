@@ -18,6 +18,7 @@ _.each([
 
 window.histomicstk = {};
 girderTest.addCoveredScripts([
+    '/clients/web/static/built/plugins/HistomicsTK/templates.js',
     '/clients/web/static/built/plugins/large_image/plugin.min.js',
     '/plugins/HistomicsTK/web_client/js/0init.js',
     '/plugins/HistomicsTK/web_client/js/app.js',
@@ -33,8 +34,7 @@ girderTest.addCoveredScripts([
     '/plugins/HistomicsTK/web_client/js/views/jobsPanel.js',
     '/plugins/HistomicsTK/web_client/js/views/panelGroup.js',
     '/plugins/HistomicsTK/web_client/js/views/visualization.js',
-    '/plugins/HistomicsTK/web_client/js/views/annotationSelectorWidget.js',
-    '/clients/web/static/built/plugins/HistomicsTK/templates.js'
+    '/plugins/HistomicsTK/web_client/js/views/annotationSelectorWidget.js'
 ]);
 
 describe('visualization', function () {

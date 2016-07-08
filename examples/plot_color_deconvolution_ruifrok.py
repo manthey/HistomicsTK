@@ -20,7 +20,7 @@ import skimage.io
 
 # load input image
 inputImageFile = ('https://data.kitware.com/api/v1/file/'
-                  '576ad39b8d777f1ecd6702f2/download')
+                  '57802ac38d777f12682731a2/download')
 
 imInput = skimage.io.imread(inputImageFile)[:, :, :3]
 
@@ -47,7 +47,7 @@ imDeconvolved = htk.ColorDeconvolution(imInput, W).Stains
 
 # Display results
 fig, ax = plt.subplots(1, 3,
-                       figsize=(8, 2.5),
+                       figsize=(7, 2.5),
                        sharex=True, sharey=True,
                        subplot_kw={'adjustable': 'box-forced'})
 ax = ax.ravel()

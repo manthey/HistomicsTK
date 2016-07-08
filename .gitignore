@@ -5,6 +5,7 @@ __pycache__/
 .#*
 *.bak
 docs/_build
+docs/auto_examples
 build
 .coverage
 *.egg

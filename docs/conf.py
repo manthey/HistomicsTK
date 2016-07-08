@@ -48,6 +48,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.napoleon',
               'sphinx.ext.todo',
               'sphinx.ext.viewcode',
+              'sphinx_gallery.gen_gallery',
               'IPython.sphinxext.ipython_console_highlighting',
               'nbsphinx']
 
@@ -58,9 +59,10 @@ autodoc_mock_imports = ['matplotlib', 'matplotlib.pyplot',
                         'scipy.ndimage.morphology','scipy.ndimage.filters',
                         'scipy.ndimage.measurements',
                         'scipy.optimize', 'scipy.signal', 'scipy.stats',
-                        'skimage', 'skimage.feature', 'skimage.measure',
-                        'skimage.segmentation', 'skimage.morphology',
-                        'sklearn.cluster', 'sklearn.neighbors.kde']
+                        'skimage', 'skimage.draw', 'skimage.feature',
+                        'skimage.measure', 'skimage.segmentation',
+                        'skimage.morphology', 'sklearn.cluster',
+                        'sklearn.neighbors.kde']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -300,3 +302,27 @@ intersphinx_mapping = {"http://docs.python.org/": None,
                        "http://docs.scipy.org/doc/scipy/reference": None}
 intersphinx_cache_limit = 10     # days to keep the cached inventories
 
+# sphinx-gallery configuration
+sphinx_gallery_conf = {
+
+    # path to directory containing example scripts
+    'examples_dirs': 'examples',
+
+    # path where to save gallery generated examples
+    'gallery_dirs': 'auto_examples'
+}
+
+sphinx_gallery_conf = {
+
+    'reference_url':  {
+             # set local modules to None
+            'histomicstk': None,
+
+            # External python modules use their documentation websites
+            'matplotlib': 'http://matplotlib.org',
+            'numpy': 'http://docs.scipy.org/doc/numpy',
+            'pandas': 'http://pandas.pydata.org/pandas-docs/stable',
+            'skimage': 'http://scikit-image.org/docs/dev/',
+            'scipy': 'http://docs.scipy.org/doc/scipy/reference'
+    }
+}

@@ -88,6 +88,13 @@ install:
     - npm install
 
 script:
+    - pushd $large_image_path
+    - python -c 'from large_image import tilesource;print dir(tilesource);'
+    - python -c 'import math;import six;from six import BytesIO;from six.moves import range;import openslide;import PIL'
+    - python -c 'import colorsys;from six import BytesIO;import PIL;from PIL import Image, ImageDraw, ImageFont'
+    - touch __init__.py
+    - python -c 'import server.tilesource.test'
+    - popd
     - mkdir -p $build_path/girder_testing_build
     - cd $build_path/girder_testing_build
     - cmake -DPYTHON_COVERAGE:BOOL=${PY_COVG} -DPYTHON_VERSION:STRING=${TRAVIS_PYTHON_VERSION} -DRUN_CORE_TESTS:BOOL="OFF" -DTEST_PLUGINS:STRING="HistomicsTK" $girder_path

@@ -56,7 +56,7 @@ addons:
 before_install:
     - CACHE="$HOME/.cache" OPENJPEG_VERSION=2.1.2 OPENJPEG_FILE=v2.1.2.tar.gz OPENJPEG_DIR=openjpeg-2.1.2 LIBTIFF_VERSION=4.0.6 OPENSLIDE_VERSION=3.4.1 source .install-openslide.sh
 
-    - GIRDER_VERSION="v1.7.0"
+    - GIRDER_VERSION="backport-hash-state-fixes"
     - GIRDER_WORKER_VERSION=master
     - LARGE_IMAGE_VERSION="girder-1.7"
     - SLICER_CLI_WEB_VERSION="girder-1.7"
@@ -101,7 +101,7 @@ before_install:
     - wget -O $build_path/install_miniconda.sh https://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh
     - bash $build_path/install_miniconda.sh -b -p $build_path/miniconda
     - source $build_path/miniconda/bin/activate $build_path/miniconda
-    - conda update --yes --quiet --all 'python<=2.7.12'
+    - conda update --yes --quiet --all # 'python<=2.7.12'
     - conda config --add channels https://conda.binstar.org/cdeepakroy
 
 install:
@@ -111,7 +111,7 @@ install:
     - cd $main_path 
     - python setup.py build_ext --inplace
     - cd $girder_path
-    - pip install -U -r requirements.txt -r requirements-dev.txt setuptools==19.4
+    - pip install -U -r requirements.txt -r requirements-dev.txt 'setuptools>=19.4'
     - pip install -U -r $large_image_path/requirements.txt
     - pip install -U -r $slicer_cli_web_path/requirements.txt 
     - pip install "git+https://github.com/pearu/pylibtiff@848785a6a9a4e2c6eb6f56ca9f7e8f6b32e523d5" --force-reinstall --ignore-installed --upgrade
